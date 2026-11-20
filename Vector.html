@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vector — Otimização & Automação Industrial</title>
+  
+  <!-- Google Fonts: Plus Jakarta Sans, Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            titanium: {
+              950: '#07090C',
+              900: '#0B0E14',
+              850: '#10151E',
+              800: '#161C28',
+              700: '#232C3D',
+            },
+            chrome: {
+              light: '#F8FAFC',
+              mid: '#CBD5E1',
+              dark: '#64748B',
+            },
+            vectorStandard: '#1E40AF',
+            vectorPro: '#A855F7',
+            vectorGold: '#D4AF37',
+          },
+          animation: {
+            'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'shimmer': 'shimmer 3s linear infinite',
+          },
+          keyframes: {
+            shimmer: {
+              '0%': { backgroundPosition: '200% center' },
+              '100%': { backgroundPosition: '-200% center' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Estética Metálica & Acabamentos em Titânio/Cromo */
+    :root {
+      --bg-primary: #07090C;
+      --border-chrome: rgba(255, 255, 255, 0.12);
+      --border-chrome-hover: rgba(255, 255, 255, 0.28);
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: #F1F5F9;
+      overflow-x: hidden;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+
+    /* Gradiente de Texto Metálico Prateado */
+    .text-metallic {
+      background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 35%, #94A3B8 70%, #F8FAFC 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .text-metallic-subtle {
+      background: linear-gradient(180deg, #FFFFFF 0%, #94A3B8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Superfícies em Aço Escovado / Vidro Metálico */
+    .metal-card {
+      background: linear-gradient(145deg, rgba(22, 28, 40, 0.72) 0%, rgba(11, 14, 20, 0.88) 100%);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border-chrome);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .metal-card:hover {
+      border-color: var(--border-chrome-hover);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.24);
+      transform: translateY(-3px);
+    }
+
+    /* Botão Cromado Sofisticado */
+    .btn-chrome {
+      background: linear-gradient(135deg, #FFFFFF 0%, #CBD5E1 50%, #94A3B8 100%);
+      color: #07090C;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15), inset 0 1px 1px #FFFFFF;
+      transition: all 0.3s ease;
+    }
+
+    .btn-chrome:hover {
+      filter: brightness(1.08);
+      box-shadow: 0 8px 30px rgba(255, 255, 255, 0.28), inset 0 1px 1px #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    /* Textura sutil de grade técnica industrial */
+    .industrial-grid {
+      background-size: 48px 48px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+    }
+
+    /* Brilhos específicos das 3 edições */
+    .glow-standard {
+      box-shadow: 0 0 40px -10px rgba(30, 64, 175, 0.45), inset 0 1px 0 rgba(96, 165, 250, 0.3);
+      border-color: rgba(59, 130, 246, 0.35);
+    }
+    .glow-pro {
+      box-shadow: 0 0 45px -10px rgba(168, 85, 247, 0.45), inset 0 1px 0 rgba(216, 180, 254, 0.35);
+      border-color: rgba(168, 85, 247, 0.45);
+    }
+    .glow-gold {
+      box-shadow: 0 0 45px -10px rgba(212, 175, 55, 0.42), inset 0 1px 0 rgba(253, 230, 138, 0.35);
+      border-color: rgba(212, 175, 55, 0.45);
+    }
+
+    /* Animação de Revelação ao Scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Scrollbar Minimalista */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #07090C;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #232C3D;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-white selection:text-titanium-950">
+
+  <!-- =========================================================
+       NAVEGAÇÃO SUPERIOR FIXA (ULTRA-MINIMALISTA METÁLICA)
+  ========================================================== -->
+  <header id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300 border-b border-white/[0.07] bg-titanium-950/75 backdrop-blur-xl">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logotipo Vetorial Metálico Vector -->
+      <a href="#inicio" class="flex items-center gap-3 group focus:outline-none">
+        <img src="logo.jpeg" alt="logo" style="border-radius: 100px; width: 40px; height: 40px;">
+      </a>
+
+      <!-- Links de Navegação Desktop -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="#cenario" class="hover:text-white transition-colors">Cenário</a>
+        <a href="#tecnologia" class="hover:text-white transition-colors">Sensores & Interface</a>
+        <a href="#ia-via" class="hover:text-white transition-colors">IA Via</a>
+        <a href="#versoes" class="hover:text-white transition-colors">Versões</a>
+        <a href="#equipe" class="hover:text-white transition-colors">Equipe</a>
+        <a href="#contato" class="hover:text-white transition-colors">Contato</a>
+      </nav>
+
+      <!-- Ações Direita -->
+      <div class="flex items-center gap-3">
+        <button onclick="openModal('Demonstração Executiva')" class="btn-chrome px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold tracking-wide cursor-pointer">
+          Solicitar Acesso
+        </button>
+        
+        <!-- Botão Menu Mobile -->
+        <button id="mobileMenuBtn" aria-label="Abrir menu" class="md:hidden p-2.5 rounded-xl border border-white/10 bg-white/5 text-slate-200 hover:bg-white/10">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Menu Mobile -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-white/10 bg-titanium-950/95 backdrop-blur-2xl px-6 py-5 space-y-3">
+      <a href="#cenario" class="block py-2 text-sm text-slate-300 hover:text-white mobile-link">Cenário Industrial</a>
+      <a href="#tecnologia" class="block py-2 text-sm text-slate-300 hover:text-white mobile-link">Sensores & Interface</a>
+      <a href="#ia-via" class="block py-2 text-sm text-slate-300 hover:text-white mobile-link">IA Via & Tempo Real</a>
+      <a href="#versoes" class="block py-2 text-sm text-slate-300 hover:text-white mobile-link">Versões Standard, Pro & Gold</a>
+      <a href="#equipe" class="block py-2 text-sm text-slate-300 hover:text-white mobile-link">Equipe Vector Inc.</a>
+      <a href="#contato" class="block py-2 text-sm text-slate-300 hover:text-white mobile-link">Contato</a>
+    </div>
+  </header>
+
+
+  <!-- =========================================================
+       SEÇÃO 1: HERO COM VÍDEO DE FUNDO (vectorbackground.mp4)
+       BLOCO 1 & BLOCO 3
+  ========================================================== -->
+  <section id="inicio" class="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
+    
+    <!-- Camada de Vídeo de Fundo Obrigatória -->
+    <div class="absolute inset-0 z-0">
+      <video 
+        id="heroBgVideo"
+        class="w-full h-full object-cover object-center scale-[1.01] opacity-55"
+        src="vectorbackground.mp4" 
+        autoplay 
+        muted 
+        loop 
+        playsinline
+      ></video>
+      
+      <!-- Overlays Metálicos Translúcidos para Contraste Impecável -->
+      <div class="absolute inset-0 bg-gradient-to-b from-titanium-950/85 via-titanium-950/65 to-titanium-950"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#07090C_92%)]"></div>
+      <div class="absolute inset-0 industrial-grid opacity-50"></div>
+    </div>
+
+    <!-- Conteúdo Principal Hero -->
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      
+      <!-- Selo Superior Metálico -->
+      <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-white/15 bg-white/[0.04] backdrop-blur-md mb-8 shadow-inner">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="font-mono text-xs tracking-[0.18em] uppercase text-slate-300">Vector Inc. • Telemetria & IA Industrial</span>
+      </div>
+
+      <!-- BLOCO 1 (Texto Exato) -->
+      <h1 class="font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.08] text-metallic max-w-5xl mx-auto">
+        Vector, precisão em cada fluxo, inteligência em cada escolha
+      </h1>
+
+      <!-- Linha Divisória Cromada -->
+      <div class="w-24 h-[1px] bg-gradient-to-r from-transparent via-slate-400 to-transparent mx-auto my-8"></div>
+
+      <!-- BLOCO 3 (Texto Exato) -->
+      <p class="font-sans text-lg sm:text-xl md:text-2xl text-slate-200/95 font-light max-w-2xl mx-auto leading-relaxed">
+        Conheça Vector, o sistema que otimizará a sua produção
+      </p>
+
+      <!-- Botões de Ação Hero -->
+      <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#versoes" class="btn-chrome w-full sm:w-auto px-8 py-4 rounded-2xl font-semibold text-sm tracking-wide flex items-center justify-center gap-2.5">
+          <span>Explorar Versões</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          </svg>
+        </a>
+        <a href="#ia-via" class="w-full sm:w-auto px-8 py-4 rounded-2xl font-medium text-sm text-white border border-white/15 bg-white/[0.05] hover:bg-white/[0.1] backdrop-blur-md transition-all flex items-center justify-center gap-2.5">
+          <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+          <span>Conhecer a IA Via</span>
+        </a>
+      </div>
+
+      <!-- Barra Discreta de Indicadores Técnicos & Controle de Vídeo -->
+      <div class="mt-16 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-400">
+        <div class="flex flex-wrap items-center justify-center gap-6">
+          <div class="flex items-center gap-2">
+            <span class="text-slate-500">SENSORES:</span>
+            <span class="text-slate-200">TEMPO REAL</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-slate-500">ASSISTENTE LLM:</span>
+            <span class="text-slate-200">VIA ENGINE</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-slate-500">EDIÇÕES:</span>
+            <span class="text-slate-200">STANDARD • PRO • GOLD</span>
+          </div>
+        </div>
+
+        <!-- Botão Discreto para Pausar/Reproduzir Vídeo de Fundo -->
+        <button 
+          id="toggleVideoBtn"
+          type="button"
+          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/15 bg-titanium-900/70 hover:bg-white/10 text-slate-300 transition-colors cursor-pointer"
+          title="Alternar reprodução do vídeo de fundo"
+        >
+          <span id="videoStatusIcon">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 5h4v14H6V5zm8 0h4v14h-4V5z"/></svg>
+          </span>
+          <span id="videoStatusText">Pausar vídeo</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       SEÇÃO 2: CENÁRIO INDUSTRIAL & VIRADA DE JOGO
+       BLOCO 2
+  ========================================================== -->
+  <section id="cenario" class="relative py-24 sm:py-32 border-t border-white/[0.06] bg-titanium-950">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="metal-card rounded-3xl p-8 sm:p-12 lg:p-16 relative overflow-hidden reveal">
+        
+        <!-- Detalhe de Reflexo Metálico Superior -->
+        <div class="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          <!-- Coluna de Texto Principal (Bloco 2 Exato) -->
+          <div class="lg:col-span-8 space-y-6">
+            <div class="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.2em] text-slate-400">
+              <span class="w-6 h-[1px] bg-slate-500"></span>
+              <span>Panorama Industrial • CNI</span>
+            </div>
+
+            <p class="font-sans text-xl sm:text-2xl lg:text-[26px] text-slate-200 font-normal leading-relaxed">
+              Um levantamento realizado pela Confederação Nacional da Indústria aponta que o gerenciamento de insumos está entre os maiores custos operacionais dentro de uma fábrica, neste sentido, mitigar desperdícios que geram bilhões de reais em prejuízo anualmente é um fator crucial.
+            </p>
+
+            <!-- Destaque Visual para a Frase de Virada -->
+            <div class="pt-4">
+              <div class="inline-block rounded-2xl p-[1px] bg-gradient-to-r from-white/40 via-slate-300/20 to-transparent">
+                <div class="rounded-[15px] bg-titanium-900/90 px-6 py-4">
+                  <p class="font-display font-bold text-2xl sm:text-3xl tracking-tight text-metallic">
+                    Isso está prestes a mudar!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coluna Visual Minimalista de Impacto -->
+          <div class="lg:col-span-4">
+            <div class="rounded-2xl border border-white/10 bg-titanium-900/80 p-6 space-y-5">
+              <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+                <span>EFICIÊNCIA DE INSUMOS</span>
+                <span class="text-emerald-400">ALVO OTIMIZADO</span>
+              </div>
+              
+              <div class="space-y-2">
+                <div class="flex justify-between text-xs text-slate-300">
+                  <span>Operação Convencional</span>
+                  <span class="font-mono text-slate-400">Perda Crítica</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-white/5 overflow-hidden">
+                  <div class="w-[62%] h-full bg-slate-600 rounded-full"></div>
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <div class="flex justify-between text-xs text-white font-medium">
+                  <span>Com Sistema Vector</span>
+                  <span class="font-mono text-emerald-400">Controle Total</span>
+                </div>
+                <div class="w-full h-2 rounded-full bg-white/10 overflow-hidden">
+                  <div class="w-[96%] h-full bg-gradient-to-r from-slate-300 via-white to-emerald-300 rounded-full"></div>
+                </div>
+              </div>
+
+              <p class="text-xs text-slate-400 leading-relaxed pt-2 border-t border-white/10">
+                Monitoramento contínuo da linha de produção para eliminar perdas invisíveis de matéria-prima.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       SEÇÃO 3: SENSORES & INTERFACE ULTRA MINIMALISTA
+       BLOCO 4
+  ========================================================== -->
+  <section id="tecnologia" class="relative py-24 sm:py-32 border-t border-white/[0.06] industrial-grid">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Texto Exato Bloco 4 -->
+        <div class="lg:col-span-6 space-y-6 reveal">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-xs font-mono text-slate-300">
+            <span>ARQUITETURA DE HARDWARE & UX</span>
+          </div>
+
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-metallic leading-tight">
+            Sensores de precisão integrados ao chão de fábrica
+          </h2>
+
+          <p class="font-sans text-base sm:text-lg text-slate-300 leading-relaxed">
+            Equipado com sensores capazes de mapear o status dos insumos na linha de produção, vector é capaz de auxiliar no ajuste dos parâmetros de produção no chão de fábrica. Vector conta com uma interface intuitiva e ultra minimalista, tornando a experiência de gerir insumos simples e prática.
+          </p>
+
+          <!-- Pilares Técnicos Minimalistas -->
+          <div class="grid grid-cols-2 gap-4 pt-4">
+            <div class="metal-card rounded-2xl p-4">
+              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center mb-3 text-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+                </svg>
+              </div>
+              <h3 class="font-display font-semibold text-sm text-white">Mapeamento Físico</h3>
+              <p class="text-xs text-slate-400 mt-1">Leitura contínua de densidade, fluxo e volume na esteira.</p>
+            </div>
+
+            <div class="metal-card rounded-2xl p-4">
+              <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center mb-3 text-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                </svg>
+              </div>
+              <h3 class="font-display font-semibold text-sm text-white">Ajuste de Parâmetros</h3>
+              <p class="text-xs text-slate-400 mt-1">Calibração precisa com interface limpa e resposta imediata.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Simulador Interativo Minimalista de Calibração de Linha -->
+        <div class="lg:col-span-6 reveal">
+          <div class="metal-card rounded-3xl p-6 sm:p-8 relative">
+            <div class="flex items-center justify-between pb-5 border-b border-white/10">
+              <div>
+                <span class="font-mono text-[11px] uppercase tracking-wider text-slate-400">Simulação de Chão de Fábrica</span>
+                <h3 class="font-display font-semibold text-lg text-white mt-0.5">Linha de Produção • Sensor 03</h3>
+              </div>
+              <span id="sensorBadge" class="px-3 py-1 rounded-full text-xs font-mono bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                OPTIMAL
+              </span>
+            </div>
+
+            <!-- Métricas Dinâmicas -->
+            <div class="grid grid-cols-2 gap-4 my-6">
+              <div class="rounded-2xl bg-titanium-950/70 border border-white/10 p-4">
+                <span class="text-[11px] font-mono text-slate-400 uppercase">Densidade dos Insumos</span>
+                <div class="mt-2 flex items-baseline gap-1.5">
+                  <span id="densityValue" class="font-mono text-2xl sm:text-3xl font-semibold text-white">0.94</span>
+                  <span class="font-mono text-xs text-slate-400">g/cm³</span>
+                </div>
+                <span class="text-[11px] text-slate-500 mt-1 block">Faixa ideal: 0,90 – 0,94</span>
+              </div>
+
+              <div class="rounded-2xl bg-titanium-950/70 border border-white/10 p-4">
+                <span class="text-[11px] font-mono text-slate-400 uppercase">Velocidade de Produção</span>
+                <div class="mt-2 flex items-baseline gap-1.5">
+                  <span id="speedValue" class="font-mono text-2xl sm:text-3xl font-semibold text-white">185</span>
+                  <span class="font-mono text-xs text-slate-400">pçs/min</span>
+                </div>
+                <span class="text-[11px] text-slate-500 mt-1 block">Fluxo estabilizado</span>
+              </div>
+            </div>
+
+            <!-- Controle Deslizante Interativo -->
+            <div class="space-y-3 bg-titanium-900/60 rounded-2xl p-4 border border-white/10">
+              <div class="flex justify-between items-center text-xs">
+                <label for="densitySlider" class="font-medium text-slate-300">Simular Ajuste de Densidade do Insumo</label>
+                <span id="wasteIndicator" class="font-mono text-emerald-400">Desperdício: 0.2%</span>
+              </div>
+              <input 
+                id="densitySlider" 
+                type="range" 
+                min="82" 
+                max="98" 
+                value="94" 
+                class="w-full accent-white cursor-pointer h-1.5 bg-white/15 rounded-lg"
+              />
+              <div class="flex justify-between text-[11px] font-mono text-slate-500">
+                <span>0.82 g/cm³</span>
+                <span>0.90 g/cm³</span>
+                <span>0.98 g/cm³</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       SEÇÃO 4: INTELIGÊNCIA ARTIFICIAL "VIA" & DASHBOARD TEMPO REAL
+       BLOCO 5
+  ========================================================== -->
+  <section id="ia-via" class="relative py-24 sm:py-32 border-t border-white/[0.06] bg-titanium-900/40">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Painel Demonstrativo da IA "Via" (Esquerda no Desktop) -->
+        <div class="lg:col-span-6 order-2 lg:order-1 reveal">
+          <div class="metal-card rounded-3xl p-6 sm:p-7 space-y-5">
+            
+            <!-- Cabeçalho do Assistente VIA -->
+            <div class="flex items-center justify-between border-b border-white/10 pb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-slate-300 to-white text-titanium-950 font-display font-bold text-xs flex items-center justify-center shadow">
+                  VIA
+                </div>
+                <div>
+                  <h3 class="font-display font-semibold text-sm text-white">CHAT VIA — IA Assistente</h3>
+                  <p class="text-[11px] text-emerald-400 font-mono flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                    Monitorando gargalos em tempo real
+                  </p>
+                </div>
+              </div>
+              <span class="font-mono text-[11px] text-slate-400 border border-white/10 px-2.5 py-1 rounded-lg">LLM INDUSTRIAL</span>
+            </div>
+
+            <!-- Mensagens Simuladas & Interativas -->
+            <div id="viaChatFeed" class="space-y-3.5 max-h-72 overflow-y-auto pr-1">
+              <div class="rounded-2xl bg-white/[0.04] border border-white/10 p-3.5 text-xs text-slate-300">
+                <span class="font-mono text-[10px] text-slate-400 block mb-1">OPERADOR • LINHA 3</span>
+                Identifiquei um aumento no desperdício de material na linha 3.
+              </div>
+
+              <div class="rounded-2xl bg-titanium-950/90 border border-white/15 p-4 text-xs text-slate-200 space-y-2 shadow-inner">
+                <div class="flex items-center justify-between">
+                  <span class="font-mono text-[10px] text-sky-300 font-semibold">VIA • DIAGNÓSTICO AUTOMÁTICO</span>
+                  <span class="font-mono text-[10px] text-slate-500">AGORA</span>
+                </div>
+                <p class="leading-relaxed">
+                  Analisando dados da Linha 3... Detectei variação na densidade dos insumos.
+                </p>
+                <div class="p-2.5 rounded-xl bg-white/[0.04] border border-white/10 text-slate-300 font-mono text-[11px]">
+                  Sugestão: Ajuste a velocidade de laminação para 182 pçs/min e recalibre o sensor para 0,94 g/cm³ para mitigar perdas.
+                </div>
+              </div>
+            </div>
+
+            <!-- Botões Rápidos de Consulta à IA Via -->
+            <div class="pt-2 border-t border-white/10">
+              <span class="text-[11px] font-mono text-slate-400 block mb-2.5">Testar consulta rápida à Via:</span>
+              <div class="flex flex-wrap gap-2">
+                <button type="button" onclick="askVia('gargalo')" class="text-xs px-3 py-1.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.12] border border-white/10 text-slate-200 transition-colors cursor-pointer">
+                  Identificar gargalos
+                </button>
+                <button type="button" onclick="askVia('materia')" class="text-xs px-3 py-1.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.12] border border-white/10 text-slate-200 transition-colors cursor-pointer">
+                  Status da matéria-prima
+                </button>
+                <button type="button" onclick="askVia('eficiencia')" class="text-xs px-3 py-1.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.12] border border-white/10 text-slate-200 transition-colors cursor-pointer">
+                  Relatório de eficiência
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Texto Exato Bloco 5 (Direita no Desktop) -->
+        <div class="lg:col-span-6 order-1 lg:order-2 space-y-6 reveal">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/[0.03] text-xs font-mono text-slate-300">
+            <span>INTELIGÊNCIA ARTIFICIAL & TELEMETRIA</span>
+          </div>
+
+          <h2 class="font-display font-bold text-3xl sm:text-4xl text-metallic leading-tight">
+            Conheça a Via: inteligência que antecipa gargalos
+          </h2>
+
+          <p class="font-sans text-base sm:text-lg text-slate-300 leading-relaxed">
+            Vector é integrado com um sofisticado modelo de linguagem a "Via" capaz de identificar gargalos que estejam impactando a eficiência produtiva da sua empresa, além de contar com moderno dashboard onde é possível acompanhar em tempo real o status da matéria-prima, vector é como nenhuma outra solução no mercado.
+          </p>
+
+          <div class="flex items-center gap-6 pt-2 text-xs font-mono text-slate-400">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-white"></span>
+              <span>Dashboard em Tempo Real</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-sky-400"></span>
+              <span>Diagnóstico Preditivo</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       SEÇÃO 5: AS TRÊS VERSÕES DO VECTOR (STANDARD, PRO E GOLD)
+       IMAGEM 75344fba.jpeg + BLOCO 6
+  ========================================================== -->
+  <section id="versoes" class="relative py-24 sm:py-32 border-t border-white/[0.06] bg-titanium-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho da Seção & Bloco 6 Exato -->
+      <div class="text-center max-w-3xl mx-auto space-y-5 reveal">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/15 bg-white/[0.04] text-xs font-mono uppercase tracking-[0.2em] text-slate-300">
+          <span>Ecossistema Escalável</span>
+        </div>
+
+        <h2 class="font-display font-bold text-3xl sm:text-5xl text-metallic tracking-tight">
+          Uma evolução, três versões.
+        </h2>
+
+        <!-- BLOCO 6 (Texto Exato) -->
+        <p class="font-sans text-lg sm:text-xl text-slate-200 leading-relaxed">
+          Vector é disponibilizado em três versões, Standard, Pro e Gold, sua assinatura é renovada mensalmente.
+        </p>
+      </div>
+
+      <!-- Vitrine da Imagem Oficial das Três Versões (75344fba.jpeg) -->
+      <div class="mt-12 reveal">
+        <div class="relative group rounded-3xl p-[1px] bg-gradient-to-r from-blue-500/40 via-purple-500/50 to-amber-400/50 shadow-[0_30px_90px_rgba(0,0,0,0.85)]">
+          <div class="relative rounded-[23px] overflow-hidden bg-titanium-900">
+            <img 
+              src="Vector3v.jpg" 
+              alt="Versões Standard, Pro e Gold do Sistema Vector" 
+              class="w-full h-auto object-cover block transition-transform duration-700 group-hover:scale-[1.015]"
+            />
+            
+            <!-- Barra Inferior Discreta de Inspeção -->
+            <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-titanium-950/95 via-titanium-950/70 to-transparent p-4 sm:p-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div class="flex items-center gap-3 text-xs font-mono text-slate-300">
+                <span class="px-2.5 py-1 rounded-md bg-blue-950/80 border border-blue-500/40 text-blue-200">STANDARD</span>
+                <span class="px-2.5 py-1 rounded-md bg-purple-950/80 border border-purple-500/40 text-purple-200">PRO</span>
+                <span class="px-2.5 py-1 rounded-md bg-amber-950/80 border border-amber-500/40 text-amber-200">GOLD</span>
+              </div>
+
+              <button 
+                type="button"
+                onclick="openLightbox()"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-xs font-medium text-white transition-all cursor-pointer"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/>
+                </svg>
+                <span>Ampliar Interfaces em Alta Definição</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards Comparativos das 3 Edições (Standard, Pro, Gold) -->
+      <div class="mt-14 grid grid-cols-1 lg:grid-cols-3 gap-8 reveal">
+        
+        <!-- VERSÃO 1: STANDARD (Azul Escuro Metálico) -->
+        <div class="metal-card glow-standard rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-blue-900 via-blue-500 to-blue-900"></div>
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs tracking-[0.2em] uppercase text-blue-400 font-semibold">Edição 01</span>
+              <span class="px-3 py-1 rounded-full text-[11px] font-mono bg-blue-950/90 text-blue-300 border border-blue-700/50">Azul Escuro</span>
+            </div>
+            
+            <h3 class="font-display font-bold text-2xl sm:text-3xl text-white mt-4">Vector Standard</h3>
+            <p class="text-sm text-slate-400 mt-2 leading-relaxed">
+              Controle essencial de linha de produção com dashboard limpo, leitura de sensores e telemetria fundamental.
+            </p>
+
+            <div class="my-6 py-4 border-y border-white/10 flex items-baseline justify-between">
+              <span class="text-xs font-mono uppercase text-slate-400">Modalidade</span>
+              <span class="text-sm font-semibold text-white">Assinatura Mensal</span>
+            </div>
+
+            <ul class="space-y-3 text-sm text-slate-300">
+              <li class="flex items-start gap-2.5">
+                <span class="text-blue-400 mt-0.5">✓</span>
+                <span>Dashboard operacional de quantidade e volume total</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-blue-400 mt-0.5">✓</span>
+                <span>Monitoramento de velocidade e densidade de insumos</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-blue-400 mt-0.5">✓</span>
+                <span>Alertas básicos via assistente integrado</span>
+              </li>
+            </ul>
+          </div>
+
+          <button 
+            type="button"
+            onclick="openModal('Vector Standard (Assinatura Mensal)')"
+            class="mt-8 w-full py-3.5 px-5 rounded-2xl bg-blue-950/90 hover:bg-blue-900 border border-blue-500/40 text-blue-100 font-semibold text-sm transition-all cursor-pointer"
+          >
+            Selecionar Standard
+          </button>
+        </div>
+
+        <!-- VERSÃO 2: PRO (Violeta & Neon) -->
+        <div class="metal-card glow-pro rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-purple-700 via-fuchsia-400 to-cyan-400"></div>
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs tracking-[0.2em] uppercase text-purple-400 font-semibold">Edição 02</span>
+              <span class="px-3 py-1 rounded-full text-[11px] font-mono bg-purple-950/90 text-purple-300 border border-purple-500/50">Violeta & Neon</span>
+            </div>
+            
+            <h3 class="font-display font-bold text-2xl sm:text-3xl text-white mt-4">Vector Pro</h3>
+            <p class="text-sm text-slate-400 mt-2 leading-relaxed">
+              Análise avançada com telemetria de alta frequência, diagnósticos detalhados da IA Via e métricas comparativas.
+            </p>
+
+            <div class="my-6 py-4 border-y border-white/10 flex items-baseline justify-between">
+              <span class="text-xs font-mono uppercase text-slate-400">Modalidade</span>
+              <span class="text-sm font-semibold text-white">Assinatura Mensal</span>
+            </div>
+
+            <ul class="space-y-3 text-sm text-slate-300">
+              <li class="flex items-start gap-2.5">
+                <span class="text-purple-400 mt-0.5">✓</span>
+                <span>Todos os recursos da versão Standard</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-purple-400 mt-0.5">✓</span>
+                <span>IA Via com diagnóstico de gargalos e recomendações</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-purple-400 mt-0.5">✓</span>
+                <span>Telemetria avançada multi-sensor em tempo real</span>
+              </li>
+            </ul>
+          </div>
+
+          <button 
+            type="button"
+            onclick="openModal('Vector Pro (Assinatura Mensal)')"
+            class="mt-8 w-full py-3.5 px-5 rounded-2xl bg-purple-950/90 hover:bg-purple-900 border border-purple-500/50 text-purple-100 font-semibold text-sm transition-all cursor-pointer"
+          >
+            Selecionar Pro
+          </button>
+        </div>
+
+        <!-- VERSÃO 3: GOLD (Dourado Metálico) -->
+        <div class="metal-card glow-gold rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-amber-700 via-yellow-300 to-amber-700"></div>
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-xs tracking-[0.2em] uppercase text-amber-400 font-semibold">Edição 03</span>
+              <span class="px-3 py-1 rounded-full text-[11px] font-mono bg-amber-950/90 text-amber-200 border border-amber-500/50">Dourado Metálico</span>
+            </div>
+            
+            <h3 class="font-display font-bold text-2xl sm:text-3xl text-white mt-4">Vector Gold</h3>
+            <p class="text-sm text-slate-400 mt-2 leading-relaxed">
+              Experiência máxima em automação industrial com inteligência preditiva completa, busca global e suporte dedicado.
+            </p>
+
+            <div class="my-6 py-4 border-y border-white/10 flex items-baseline justify-between">
+              <span class="text-xs font-mono uppercase text-slate-400">Modalidade</span>
+              <span class="text-sm font-semibold text-white">Assinatura Mensal</span>
+            </div>
+
+            <ul class="space-y-3 text-sm text-slate-300">
+              <li class="flex items-start gap-2.5">
+                <span class="text-amber-400 mt-0.5">✓</span>
+                <span>Todos os recursos da versão Pro sem limites</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-amber-400 mt-0.5">✓</span>
+                <span>Otimização preditiva autônoma de insumos e densidade</span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <span class="text-amber-400 mt-0.5">✓</span>
+                <span>Consultoria e implantação prioritária Vector Inc.</span>
+              </li>
+            </ul>
+          </div>
+
+          <button 
+            type="button"
+            onclick="openModal('Vector Gold (Assinatura Mensal)')"
+            class="mt-8 w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-amber-500 via-yellow-300 to-amber-500 text-titanium-950 font-bold text-sm hover:brightness-110 transition-all shadow-lg cursor-pointer"
+          >
+            Selecionar Gold
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       SEÇÃO 6: TIME DE ELITE VECTOR INC.
+       BLOCO 7
+  ========================================================== -->
+  <section id="equipe" class="relative py-24 sm:py-32 border-t border-white/[0.06] bg-titanium-900/35 industrial-grid">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto space-y-4 reveal">
+        <span class="font-mono text-xs tracking-[0.22em] uppercase text-slate-400">Liderança & Engenharia</span>
+        
+        <!-- BLOCO 7 (Texto Exato) -->
+        <h2 class="font-display font-bold text-2xl sm:text-4xl text-metallic leading-snug">
+          Equipe Vector:
+        </h2>
+      </div>
+
+      <!-- Grid dos 4 Integrantes com Acabamento Metálico Minimalista -->
+      <div class="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+        
+        <!-- Integrante 1 -->
+        <div class="metal-card rounded-3xl p-6 text-center flex flex-col items-center justify-between group">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-white/25 via-slate-400/15 to-transparent p-[1px] mb-5">
+            <div class="w-full h-full rounded-[15px] bg-titanium-950 flex items-center justify-center font-display font-bold text-lg text-metallic tracking-wider">
+              <img src="Gustavo.jpeg" alt="Gustavo dos Santos" style="border-radius: 10px;">
+            </div>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-sm sm:text-base tracking-wide text-white leading-snug">
+              GUSTAVO DOS SANTOS
+            </h3>
+            <span class="font-mono text-[11px] text-slate-400 uppercase tracking-widest mt-2 block">Product Designer</span>
+          </div>
+          <div class="w-10 h-[1px] bg-white/15 group-hover:w-20 group-hover:bg-white/40 transition-all mt-5"></div>
+        </div>
+
+        <!-- Integrante 2 -->
+        <div class="metal-card rounded-3xl p-6 text-center flex flex-col items-center justify-between group">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-white/25 via-slate-400/15 to-transparent p-[1px] mb-5">
+            <div class="w-full h-full rounded-[15px] bg-titanium-950 flex items-center justify-center font-display font-bold text-lg text-metallic tracking-wider">
+              <img src="Joao.jpg" alt="João Marcos Ferreira de Oliveira" style="border-radius: 10px;">
+            </div>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-sm sm:text-base tracking-wide text-white leading-snug">
+              JOÃO MARCOS FERREIRA DE OLIVEIRA
+            </h3>
+            <span class="font-mono text-[11px] text-slate-400 uppercase tracking-widest mt-2 block">Product Manager</span>
+          </div>
+          <div class="w-10 h-[1px] bg-white/15 group-hover:w-20 group-hover:bg-white/40 transition-all mt-5"></div>
+        </div>
+
+        <!-- Integrante 3 -->
+        <div class="metal-card rounded-3xl p-6 text-center flex flex-col items-center justify-between group">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-white/25 via-slate-400/15 to-transparent p-[1px] mb-5">
+            <div class="w-full h-full rounded-[15px] bg-titanium-950 flex items-center justify-center font-display font-bold text-lg text-metallic tracking-wider">
+              <img src="Levi.jpeg" alt="Jamerson Levi Martins de Souza" style="border-radius: 10px;">
+            </div>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-sm sm:text-base tracking-wide text-white leading-snug">
+              JAMERSON LEVI MARTINS DE SOUZA
+            </h3>
+            <span class="font-mono text-[11px] text-slate-400 uppercase tracking-widest mt-2 block">Product Manager</span>
+          </div>
+          <div class="w-10 h-[1px] bg-white/15 group-hover:w-20 group-hover:bg-white/40 transition-all mt-5"></div>
+        </div>
+
+        <!-- Integrante 4 -->
+        <div class="metal-card rounded-3xl p-6 text-center flex flex-col items-center justify-between group">
+          <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-white/25 via-slate-400/15 to-transparent p-[1px] mb-5">
+            <div class="w-full h-full rounded-[15px] bg-titanium-950 flex items-center justify-center font-display font-bold text-lg text-metallic tracking-wider">
+              <img src="Pedro.jpeg" alt="Pedro Tavares Sena" style="border-radius: 10px;">
+            </div>
+          </div>
+          <div>
+            <h3 class="font-display font-bold text-sm sm:text-base tracking-wide text-white leading-snug">
+              PEDRO TAVARES SENA
+            </h3>
+            <span class="font-mono text-[11px] text-slate-400 uppercase tracking-widest mt-2 block">Product Designer</span>
+          </div>
+          <div class="w-10 h-[1px] bg-white/15 group-hover:w-20 group-hover:bg-white/40 transition-all mt-5"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- =========================================================
+       SEÇÃO 7: RODAPÉ OFICIAL & CONTATOS
+       BLOCO 8
+  ========================================================== -->
+  <footer id="contato" class="relative border-t border-white/10 bg-titanium-950 pt-16 pb-12">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="metal-card rounded-3xl p-8 sm:p-12 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+        
+        <!-- Identidade & Título Oficial (Bloco 8) -->
+        <div class="space-y-3">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-slate-200 to-slate-600 p-[1px]">
+              <div class="w-full h-full rounded-[11px] bg-titanium-950 flex items-center justify-center">
+                <svg class="w-5 h-5" viewBox="0 0 36 36" fill="none">
+                  <path d="M6 10L16.5 28L28.5 8.5M28.5 8.5H21.5M28.5 8.5V15.5" stroke="#F8FAFC" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+            <h2 class="font-display font-bold text-xl sm:text-2xl text-metallic">
+              Vector — Otimização & Automação Industrial
+            </h2>
+          </div>
+
+          <!-- Canais Oficiais Exatos (Bloco 8) -->
+          <div class="pt-2 space-y-2 font-sans text-sm sm:text-base text-slate-300">
+            <p class="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <a href="https://www.vectorsistemas.com.br" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">
+                🌐 www.vectorsistemas.com.br
+              </a>
+              <span class="text-slate-600">|</span>
+              <a href="mailto:contato@vectorsistemas.com.br" class="hover:text-white transition-colors">
+                ✉️ contato@vectorsistemas.com.br
+              </a>
+            </p>
+            <p class="flex flex-wrap items-center gap-x-3 gap-y-1">
+              <a href="tel:+5571987654321" class="hover:text-white transition-colors">
+                📱 (71) 98765-4321
+              </a>
+              <span class="text-slate-600">|</span>
+              <a href="https://instagram.com/vector.automacao" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors">
+                📸 @vector.automacao
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Botão de Contato Rápido -->
+        <div class="w-full lg:w-auto flex flex-col sm:flex-row lg:flex-col gap-3">
+          <button 
+            type="button"
+            onclick="openModal('Contato Comercial Vector Inc.')"
+            class="btn-chrome px-7 py-3.5 rounded-2xl text-sm font-semibold text-center cursor-pointer"
+          >
+            Falar com Especialista
+          </button>
+          <a href="#inicio" class="px-7 py-3 rounded-2xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] text-xs font-mono text-slate-400 hover:text-white text-center transition-colors">
+            Voltar ao Topo ↑
+          </a>
+        </div>
+
+      </div>
+
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500">
+        <span>© 2026 Vector Inc. Todos os direitos reservados.</span>
+        <span>PRECISÃO EM CADA FLUXO • INTELIGÊNCIA EM CADA ESCOLHA</span>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- =========================================================
+       LIGHTBOX PARA INSPEÇÃO DA IMAGEM DAS 3 VERSÕES (75344fba.jpeg)
+  ========================================================== -->
+  <div id="imageLightbox" class="fixed inset-0 z-50 hidden items-center justify-center bg-titanium-950/95 backdrop-blur-2xl p-4 sm:p-8" onclick="closeLightbox(event)">
+    <div class="relative max-w-6xl w-full rounded-3xl border border-white/20 bg-titanium-900 overflow-hidden shadow-2xl" onclick="event.stopPropagation()">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-white/10">
+        <span class="font-display font-semibold text-sm text-white">Sistema Vector — Edições Standard, Pro e Gold</span>
+        <button type="button" onclick="closeLightbox()" class="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white cursor-pointer" aria-label="Fechar visualização">
+          ✕
+        </button>
+      </div>
+      <div class="p-2 sm:p-4 bg-black flex items-center justify-center">
+        <img src="75344fba.jpeg" alt="Versões Standard, Pro e Gold do Sistema Vector em tela cheia" class="max-h-[80vh] w-auto object-contain rounded-xl" />
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================
+       MODAL DE SOLICITAÇÃO DE ASSINATURA / DEMONSTRAÇÃO
+  ========================================================== -->
+  <div id="actionModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-titanium-950/85 backdrop-blur-xl p-4" onclick="closeModal(event)">
+    <div class="metal-card max-w-md w-full rounded-3xl p-7 sm:p-8 relative" onclick="event.stopPropagation()">
+      <button type="button" onclick="closeModal()" class="absolute top-5 right-5 w-8 h-8 rounded-xl bg-white/5 hover:bg-white/15 text-slate-300 flex items-center justify-center cursor-pointer" aria-label="Fechar modal">
+        ✕
+      </button>
+
+      <span class="font-mono text-[11px] uppercase tracking-[0.2em] text-slate-400">Vector Inc.</span>
+      <h3 id="modalTitle" class="font-display font-bold text-2xl text-metallic mt-1">Solicitar Acesso</h3>
+      <p class="text-xs text-slate-400 mt-1.5">
+        Preencha seus dados industriais para ativar sua assinatura mensal ou agendar uma demonstração técnica.
+      </p>
+
+      <form id="leadForm" class="mt-6 space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1.5">Nome / Responsável</label>
+          <input type="text" required placeholder="Ex: Eng. Carlos Mendes" class="w-full px-4 py-3 rounded-xl bg-titanium-950/80 border border-white/15 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-white/40" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1.5">E-mail Corporativo</label>
+          <input type="email" required placeholder="nome@suaempresa.com.br" class="w-full px-4 py-3 rounded-xl bg-titanium-950/80 border border-white/15 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-white/40" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1.5">Versão de Interesse (Assinatura Mensal)</label>
+          <select id="planSelect" class="w-full px-4 py-3 rounded-xl bg-titanium-950/80 border border-white/15 text-sm text-white focus:outline-none focus:border-white/40">
+            <option value="Vector Standard">Vector Standard (Azul Escuro)</option>
+            <option value="Vector Pro">Vector Pro (Violeta & Neon)</option>
+            <option value="Vector Gold">Vector Gold (Dourado Metálico)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-chrome w-full py-3.5 rounded-2xl font-semibold text-sm mt-2 cursor-pointer">
+          Confirmar Solicitação
+        </button>
+      </form>
+
+      <div id="formFeedback" class="hidden mt-5 p-4 rounded-2xl bg-emerald-500/15 border border-emerald-500/30 text-xs text-emerald-200 leading-relaxed">
+        Solicitação registrada com sucesso! A equipe da <strong>Vector Inc.</strong> entrará em contato em breve pelo e-mail informado.
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================
+       JAVASCRIPT: INTERATIVIDADE, VÍDEO, SIMULAÇÕES E ANIMAÇÕES
+  ========================================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Controle do Vídeo de Fundo (video_1.mp4)
+      const video = document.getElementById('heroBgVideo');
+      const toggleBtn = document.getElementById('toggleVideoBtn');
+      const statusText = document.getElementById('videoStatusText');
+      const statusIcon = document.getElementById('videoStatusIcon');
+
+      if (video && toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+          if (video.paused) {
+            video.play();
+            statusText.textContent = 'Pausar vídeo';
+            statusIcon.innerHTML = '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 5h4v14H6V5zm8 0h4v14h-4V5z"/></svg>';
+          } else {
+            video.pause();
+            statusText.textContent = 'Reproduzir vídeo';
+            statusIcon.innerHTML = '<svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+          }
+        });
+      }
+
+      // 2. Menu Mobile
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const mobileLinks = document.querySelectorAll('.mobile-link');
+
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+        mobileLinks.forEach(link => {
+          link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+        });
+      }
+
+      // 3. Simulador Interativo de Densidade de Insumos (Seção 3)
+      const slider = document.getElementById('densitySlider');
+      const densityValue = document.getElementById('densityValue');
+      const speedValue = document.getElementById('speedValue');
+      const wasteIndicator = document.getElementById('wasteIndicator');
+      const sensorBadge = document.getElementById('sensorBadge');
+
+      if (slider) {
+        slider.addEventListener('input', (e) => {
+          const raw = parseInt(e.target.value, 10);
+          const density = (raw / 100).toFixed(2);
+          densityValue.textContent = density;
+
+          // Calcula velocidade e desperdício simulado conforme proximidade da faixa ideal (0.90 - 0.94)
+          const diff = Math.abs(raw - 92);
+          const speed = Math.max(160, 188 - diff);
+          speedValue.textContent = speed;
+
+          if (raw >= 90 && raw <= 94) {
+            wasteIndicator.textContent = 'Desperdício: 0.2%';
+            wasteIndicator.className = 'font-mono text-emerald-400';
+            sensorBadge.textContent = 'OPTIMAL';
+            sensorBadge.className = 'px-3 py-1 rounded-full text-xs font-mono bg-emerald-500/15 text-emerald-300 border border-emerald-500/30';
+          } else {
+            const waste = (diff * 0.45).toFixed(1);
+            wasteIndicator.textContent = `Desperdício: ${waste}%`;
+            wasteIndicator.className = 'font-mono text-amber-300';
+            sensorBadge.textContent = 'AJUSTAR PARÂMETRO';
+            sensorBadge.className = 'px-3 py-1 rounded-full text-xs font-mono bg-amber-500/15 text-amber-300 border border-amber-500/30';
+          }
+        });
+      }
+
+      // 4. Animação de Revelação Suave ao Scroll (IntersectionObserver)
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      reveals.forEach(el => observer.observe(el));
+
+      // 5. Envio do Formulário no Modal
+      const leadForm = document.getElementById('leadForm');
+      const formFeedback = document.getElementById('formFeedback');
+      if (leadForm) {
+        leadForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          leadForm.classList.add('hidden');
+          formFeedback.classList.remove('hidden');
+        });
+      }
+    });
+
+    // Funções Globais para IA "Via" Interativa
+    function askVia(topic) {
+      const feed = document.getElementById('viaChatFeed');
+      if (!feed) return;
+
+      const responses = {
+        gargalo: {
+          q: 'Identificar gargalos na linha atual.',
+          a: 'Varredura concluída: A esteira de alimentação 02 apresenta micro-oscilação de 3,1%. Recomendo sincronizar o fluxo para manter 12.450 pçs/turno sem retenção.'
+        },
+        materia: {
+          q: 'Qual o status da matéria-prima em tempo real?',
+          a: 'Estoque ativo em linha: 48,2 m³ estáveis. Densidade média aferida pelos sensores em 0,94 g/cm³ dentro da janela ideal de operação.'
+        },
+        eficiencia: {
+          q: 'Gerar resumo de eficiência produtiva.',
+          a: 'Eficiência global em 98,4% (+5,4% acima da meta mensal). Redução estimada de perdas operacionais ativa em todas as células monitoradas.'
+        }
+      };
+
+      const item = responses[topic];
+      if (!item) return;
+
+      const userBubble = document.createElement('div');
+      userBubble.className = 'rounded-2xl bg-white/[0.04] border border-white/10 p-3.5 text-xs text-slate-300';
+      userBubble.innerHTML = `<span class="font-mono text-[10px] text-slate-400 block mb-1">CONSULTA</span>${item.q}`;
+
+      const viaBubble = document.createElement('div');
+      viaBubble.className = 'rounded-2xl bg-titanium-950/90 border border-white/15 p-4 text-xs text-slate-200 space-y-1.5';
+      viaBubble.innerHTML = `<span class="font-mono text-[10px] text-sky-300 font-semibold block">VIA • RESPOSTA EM TEMPO REAL</span><p class="leading-relaxed">${item.a}</p>`;
+
+      feed.appendChild(userBubble);
+      feed.appendChild(viaBubble);
+      feed.scrollTop = feed.scrollHeight;
+    }
+
+    // Funções do Lightbox da Imagem 75344fba.jpeg
+    function openLightbox() {
+      const lb = document.getElementById('imageLightbox');
+      if (lb) {
+        lb.classList.remove('hidden');
+        lb.classList.add('flex');
+      }
+    }
+
+    function closeLightbox(event) {
+      if (event && event.target !== event.currentTarget) return;
+      const lb = document.getElementById('imageLightbox');
+      if (lb) {
+        lb.classList.add('hidden');
+        lb.classList.remove('flex');
+      }
+    }
+
+    // Funções do Modal de Assinatura / Contato
+    function openModal(contextTitle) {
+      const modal = document.getElementById('actionModal');
+      const titleEl = document.getElementById('modalTitle');
+      const planSelect = document.getElementById('planSelect');
+      const leadForm = document.getElementById('leadForm');
+      const formFeedback = document.getElementById('formFeedback');
+
+      if (leadForm && formFeedback) {
+        leadForm.reset();
+        leadForm.classList.remove('hidden');
+        formFeedback.classList.add('hidden');
+      }
+
+      if (titleEl && contextTitle) {
+        titleEl.textContent = contextTitle;
+      }
+
+      if (planSelect && contextTitle) {
+        if (contextTitle.includes('Standard')) planSelect.value = 'Vector Standard';
+        else if (contextTitle.includes('Pro')) planSelect.value = 'Vector Pro';
+        else if (contextTitle.includes('Gold')) planSelect.value = 'Vector Gold';
+      }
+
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeModal(event) {
+      if (event && event.target !== event.currentTarget) return;
+      const modal = document.getElementById('actionModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+  </script>
+</body>
+</html>
